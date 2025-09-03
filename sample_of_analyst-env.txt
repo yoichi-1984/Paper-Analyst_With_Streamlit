@@ -10,6 +10,7 @@ GPT4.1_MAX_INPUT_TOKENS=1000000
 # --- モデル2: o4-mini の詳細 ---
 o4-mini_AZURE_OPENAI_KEY="xxxxx"
 o4-mini_AZURE_OPENAI_ENDPOINT="https://xxxxx.openai.azure.com/"
-o4-mini_AZURE_OPENAI_DEPLOYMENT="o4-mini"
+o4-mini_AZURE_OPENAI_DEPLOYMENT="o4-minixxxxx"
 o4-mini_AZURE_OPENAI_API_VERSION="2025-04-01-preview"
 o4-mini_MAX_INPUT_TOKENS=200000
+#API-versionは2025年9月3日段階の推奨
