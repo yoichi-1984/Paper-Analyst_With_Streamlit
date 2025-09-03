@@ -1,0 +1,7 @@
+streamlit
+openai
+python-dotenv
+PyYAML
+PyMuPDF
+python-docx
+tiktoken

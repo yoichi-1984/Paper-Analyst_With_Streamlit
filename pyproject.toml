@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-analyst"
+version = "0.1.0"
+description = "AI application for analyzing and explaining literature."
+authors = [
+    { name = "yoichi-1984", email = "yoichi.1984.engineer@gmail.com" },
+]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: Apache License 2.0", 
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "streamlit",
+    "openai",
+    "python-dotenv",
+    "PyYAML",
+    "PyMuPDF",
+    "python-docx",
+    "tiktoken",
+]
+
+[project.scripts]
+# ターミナルで 'paper-analyst' と打つとアプリが起動します
+paper-analyst = "paper_analyst.run:start"
+
+[tool.setuptools.packages.find]
+where = ["src"]

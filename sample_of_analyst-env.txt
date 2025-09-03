@@ -1,0 +1,15 @@
+# --- 利用可能なモデルをカンマ区切りで定義 ---
+# UIの選択肢に表示される名前です。空白を含まない英数字が望ましいです (例: GPT4_1, o4_mini)
+MODEL_NAMES="GPT4.1,o4-mini"
+# --- モデル1: GPT4.1 の詳細 ---
+GPT4.1_AZURE_OPENAI_KEY="xxx"
+GPT4.1_AZURE_OPENAI_ENDPOINT="https://xxxxx.openai.azure.com/"
+GPT4.1_AZURE_OPENAI_DEPLOYMENT="gpt-4.1xxxxx"
+GPT4.1_AZURE_OPENAI_API_VERSION="2025-04-01-preview"
+GPT4.1_MAX_INPUT_TOKENS=1000000
+# --- モデル2: o4-mini の詳細 ---
+o4-mini_AZURE_OPENAI_KEY="xxxxx"
+o4-mini_AZURE_OPENAI_ENDPOINT="https://xxxxx.openai.azure.com/"
+o4-mini_AZURE_OPENAI_DEPLOYMENT="o4-mini"
+o4-mini_AZURE_OPENAI_API_VERSION="2025-04-01-preview"
+o4-mini_MAX_INPUT_TOKENS=200000
