@@ -24,6 +24,7 @@ dependencies = [
     "PyMuPDF",
     "python-docx",
     "tiktoken",
+    "build"
 ]
 
 [project.scripts]
@@ -32,3 +33,6 @@ paper-analyst = "paper_analyst.run:start"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+paper_analyst = ["*.yaml"]
