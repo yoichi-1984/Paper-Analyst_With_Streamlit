@@ -41,6 +41,10 @@ def initialize_session_state():
     for key, value in config.SESSION_STATE_DEFAULTS.items():
         if key not in st.session_state:
             st.session_state[key] = value.copy() if isinstance(value, (dict, list)) else value
+    
+    # ★★★ 追加: ウィジェットをリセットするためのキーカウンター ★★★
+    if 'uploader_key_counter' not in st.session_state:
+        st.session_state.uploader_key_counter = 0
 
 def reset_session():
     """セッションを完全にリセットする"""
@@ -56,14 +60,19 @@ def get_token_count(string: str, encoding_name: str = "cl100k_base") -> int:
         num_tokens = len(encoding.encode(string))
         return num_tokens
     except Exception:
-        # tiktokenが利用できない環境のためのフォールバック
         return len(string) // 4
 
 def _clear_session_for_load():
     """st.rerun()を呼ばずにセッションをクリアするヘルパー関数"""
+    # ★★★ 修正: キーカウンターを維持する ★★★
+    uploader_counter = st.session_state.get('uploader_key_counter', 0)
+    
     for key in list(st.session_state.keys()):
         del st.session_state[key]
+        
     initialize_session_state()
+    st.session_state.uploader_key_counter = uploader_counter
+
 
 def load_session_from_file(uploaded_file):
     """アップロードされたファイルオブジェクトからセッションを復元する"""
@@ -92,6 +101,12 @@ def load_session_from_file(uploaded_file):
     except Exception as e:
         st.error(config.UITexts.SESSION_LOAD_ERROR.format(e=e))
 
+def on_upload_change():
+    """ファイルがアップロードされたときに呼ばれ、処理フラグを立てる"""
+    # ★★★ 修正: 動的なキーを使ってウィジェットの状態を取得 ★★★
+    uploader_key = f"session_uploader_widget_{st.session_state.uploader_key_counter}"
+    if st.session_state[uploader_key] is not None:
+        st.session_state.file_to_process = st.session_state[uploader_key]
 
 # --- UI描画関数 ---
 
@@ -121,9 +136,12 @@ def render_sidebar():
                 use_container_width=True
             )
 
+        # ★★★ 修正: 動的なキーをウィジェットに設定 ★★★
         st.file_uploader(
             label=config.UITexts.UPLOAD_SESSION_LABEL, type="json", 
-            key="session_uploader_widget", disabled=st.session_state.is_generating
+            key=f"session_uploader_widget_{st.session_state.uploader_key_counter}", 
+            on_change=on_upload_change, 
+            disabled=st.session_state.is_generating
         )
 
         st.divider()
@@ -198,7 +216,6 @@ def render_chat_interface():
         label_visibility="collapsed"
     )
 
-    # ★★★ 修正: ここで表示されるメッセージは、元の短い質問のまま ★★★
     for message in st.session_state.messages:
         if message["role"] != "system":
             with st.chat_message(message["role"]):
@@ -238,8 +255,13 @@ def run_app():
     
     render_sidebar()
 
-    if uploaded_file := st.session_state.get("session_uploader_widget"):
+    if 'file_to_process' in st.session_state and st.session_state.file_to_process is not None:
+        uploaded_file = st.session_state.file_to_process
         load_session_from_file(uploaded_file)
+        st.session_state.file_to_process = None
+        
+        # ★★★ 修正: キーカウンターをインクリメントしてウィジェットをリセット ★★★
+        st.session_state.uploader_key_counter += 1
         st.rerun()
 
     if st.session_state.app_status == "INITIAL":
@@ -306,7 +328,6 @@ def run_app():
                         )
                 combined_context = "\n\n---\n\n".join(context_texts)
 
-                # ★★★ 修正: API送信用にメッセージのディープコピーを作成 ★★★
                 messages_for_api = [msg.copy() for msg in st.session_state.messages]
                 last_user_message = messages_for_api[-1]["content"]
                 
@@ -315,7 +336,6 @@ def run_app():
                     f"上記の参考資料に基づいて、以下の質問に答えてください。\n\n"
                     f"質問: {last_user_message}"
                 )
-                # ★★★ 修正: コピーしたメッセージリストの末尾を書き換える ★★★
                 messages_for_api[-1]["content"] = contextual_prompt
                 
                 if st.session_state.get("debug_mode", False):
