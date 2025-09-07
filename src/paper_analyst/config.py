@@ -44,7 +44,7 @@ class UITexts:
     SESSION_FORMAT_ERROR = "対応していないJSONフォーマットです。"
 
     # --- 初期設定画面 ---
-    MODEL_SELECT_HEADER = "1. AIモデルを選択"
+    MODEL_SELECT_HEADER = "1. AIモデルを選択（GPT4.1:文書量重視、o4-mini：思考重視）"
     FOLDER_INPUT_HEADER = "2. 読み込む文献フォルダを指定"
     FOLDER_INPUT_HELP = "仮想環境からの相対パス、またはフルパスで指定します。"
     LOAD_BUTTON_LABEL = "文献を読み込む"
