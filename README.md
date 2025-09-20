@@ -5,6 +5,17 @@ Streamlitベースの文献分析アプリ「Paper-Analyst」を構成する4つ
 の設計と機能を概説します。  
 config.pyで定数や表示文言を一元管理し、document_loader.pyでPDF／Word／テキストの各形式を適切に抽出、main.pyでAzure OpenAIを用いた対話型インターフェースを提供、run.pyでアプリを起動する流れをまとめています。  
 これにより、複数文書を背景情報として統合的に扱いながら、Web上で質問応答を実現する仕組みが明らかになります。  
+---  
+  
+## 使い方  
+・pythonおよびgitをインストールして設定  
+・好きな場所に仮想環境用のフォルダを作成（例：C:\Users\user\Documents\Myproject\000_test）  
+・コマンドプロントでgit clone実施  
+(例：　git clone https://github.com/yoichi-1984/Paper-Analyst_With_Streamlit.git C:\Users\user\Documents\Myproject\000_test)  
+・該当フォルダに仮想環境を構築  
+（参考：https://note.com/yoichi_1984xx/n/n3c95602b011c）  
+・"env"フォルダに、analyst.envを作成 (参考：sample_of_analyst-env.txt)  
+・START.batから起動  
   
 ---  
   
