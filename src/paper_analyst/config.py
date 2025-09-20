@@ -1,6 +1,7 @@
 # --- 定数定義 ---
 DOTENV_PATH = "env/analyst.env"
 MAX_DOCUMENTS = 10
+MAX_DOCUMENT_CHARS = 200000
 
 # --- 環境変数キー名 ---
 MODEL_NAMES_KEY = "MODEL_NAMES"

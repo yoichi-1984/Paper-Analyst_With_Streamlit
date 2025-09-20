@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paper-analyst"
-version = "0.1.1"
+version = "0.1.2"
 description = "AI application for analyzing and explaining literature."
 authors = [
     { name = "yoichi-1984", email = "yoichi.1984.engineer@gmail.com" },
